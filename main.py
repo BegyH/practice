@@ -1,13 +1,16 @@
 from typing import Optional
-
 from fastapi import FastAPI
+import requests
+
 
 app = FastAPI()
 
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    r = requests.get('https://jsonplaceholder.typicode.com/photos')
+    r = r.json()
+    return r
 
 
 @app.get("/items/{item_id}")
