@@ -2,6 +2,7 @@ from typing import Optional
 from fastapi import FastAPI
 from colorthief import ColorThief
 import aiohttp
+from starlette.responses import HTMLResponse
 import uvicorn 
 import asyncio
 import time
@@ -22,16 +23,26 @@ async def load_image(url: str, session: ClientSession):
     return color_thief.get_color(quality = 1)
 
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 async def read_root():
     async with ClientSession() as session:
         t1 = time.time()
         r = await session.request(method='GET', url='https://jsonplaceholder.typicode.com/photos')
         r = await r.json()
-        tasks = [load_image(img["thumbnailUrl"], session) for img in r[:1]]
+        tasks = [load_image(img["thumbnailUrl"], session) for img in r[:100]]
         d = await asyncio.gather(*tasks)
     print('Time' , time.time() - t1)
-    return d
+    return  f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Костя красавчик</h1>""" + "".join(  [f"<div style=\"background:rgb({','.join([str(a) for a in i])})\">hui</div>" for i in d]) +"""</body>
+</html>"""
 
 # 4.11 4.24 3.83 
 # 0.9  1.0
