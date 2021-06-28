@@ -10,6 +10,8 @@ fastapi = "^0.65.2"
 uvicorn = "^0.14.0"
 requests = "^2.25.1"
 colorthief = "^0.2.1"
+asyncio = "^3.4.3"
+aiohttp = "^3.7.4"
 
 [tool.poetry.dev-dependencies]
 
