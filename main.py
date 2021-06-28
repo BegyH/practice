@@ -41,7 +41,7 @@ async def read_root():
     <title>Document</title>
 </head>
 <body>
-    <h1>Костя красавчик</h1>""" + "".join(  [f"<div style=\"background:rgb({','.join([str(a) for a in i])})\">hui</div>" for i in d]) +"""</body>
+    <h1>Костя красавчик</h1>""" + "".join(  [f"<div style=\"background:rgb({','.join([str(a) for a in i])})\">KRASAVA</div>" for i in d]) +"""</body>
 </html>"""
 
 # 4.11 4.24 3.83 
