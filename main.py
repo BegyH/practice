@@ -10,7 +10,11 @@ app = FastAPI()
 @app.get("/")
 def read_root():
     r = requests.get('https://jsonplaceholder.typicode.com/photos')
-    return r
+    r = r.json()
+    d = []
+    for i in r:
+        d.append(i["thumbnailUrl"])
+    return d
 
 
 @app.get("/items/{item_id}")
@@ -20,3 +24,5 @@ def read_item(item_id: int, q: Optional[str] = None):
 # Чтобы запустить программу испоолните poetry run python main.py
 if __name__ == "__main__":
     uvicorn.run('main:app', host="127.0.0.1", port=8000, log_level="info", reload=True)
+else:
+    a = 1
