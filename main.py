@@ -1,6 +1,7 @@
 from typing import Optional
 from fastapi import FastAPI
 import requests
+import uvicorn 
 
 
 app = FastAPI()
@@ -17,4 +18,5 @@ def read_root():
 def read_item(item_id: int, q: Optional[str] = None):
     return {"item_id": item_id, "q": q}
 
-    
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=8000, log_level="info")
