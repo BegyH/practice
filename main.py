@@ -1,5 +1,6 @@
 from typing import Optional
 from fastapi import FastAPI
+from colorthief import ColorThief
 import requests
 import uvicorn 
 
@@ -12,8 +13,12 @@ def read_root():
     r = requests.get('https://jsonplaceholder.typicode.com/photos')
     r = r.json()
     d = []
-    for i in r:
-        d.append(i["thumbnailUrl"])
+    for i in r[:5]:
+        image_request = requests.get(i["thumbnailUrl"], stream = True)
+        simple = image_request.raw
+        simple.decode_content = True
+        color_thief = ColorThief(simple)
+        d.append(color_thief.get_color(quality = 1))
     return d
 
 
