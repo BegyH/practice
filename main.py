@@ -10,10 +10,6 @@ app = FastAPI()
 @app.get("/")
 def read_root():
     r = requests.get('https://jsonplaceholder.typicode.com/photos')
-    r = r.json()
-    d = []
-    for item in r:
-        d.append(item['thumbnailUrl'])
     return r
 
 
